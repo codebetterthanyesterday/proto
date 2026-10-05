@@ -9,7 +9,7 @@
   --paper-deep:#eae7c6;
   --card:#fbfbfb;
   --ink:#241512;
-  --ink-soft:#7c675d;
+  --ink-soft:#746056;
   --brand:#ca3232;
   --on-brand:#fbfbfb;
   --line:rgba(36,21,18,.13);
@@ -21,9 +21,14 @@
   --grain-blend:multiply;
   --ok:#2f6f4f;
   --warn:#9a6212;
-  /* warna logo tidak ikut tema — merah & krem Bunnyè selalu sama */
+  --radius:14px;
+  /* merah & krem Bunnyè tidak pernah berubah; yang bertukar hanya mana yang jadi isi dan mana yang jadi tepi */
   --logo-red:#ca3232;
   --cream:#f5f5dc;
+  --mark-fill:#ca3232;
+  --mark-stroke:#f5f5dc;
+  --mark-shadow:rgba(120,22,22,.5);
+  --logo-glow:0 5px 13px rgba(202,50,50,.26);
   --font-display:"Instrument Serif","Iowan Old Style",Georgia,"Times New Roman",serif;
   --font-script:"Lobster Two","Brush Script MT",cursive;
   --font-ui:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -31,42 +36,50 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#16110f;
-    --paper-deep:#0f0b0a;
-    --card:#211a17;
-    --ink:#f4ece1;
-    --ink-soft:#a89487;
-    --brand:#e4615b;
+    --paper:#171110;
+    --paper-deep:#100c0b;
+    --card:#221a18;
+    --ink:#f2ecd8;
+    --ink-soft:#ab9b8c;
+    --brand:#e9655d;
     --on-brand:#1a1210;
-    --line:rgba(244,236,225,.14);
-    --line-strong:rgba(244,236,225,.3);
-    --wash:rgba(228,97,91,.12);
-    --shadow-s:0 1px 1px rgba(0,0,0,.4), 0 4px 12px -8px rgba(0,0,0,.8);
-    --shadow-m:0 1px 2px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.9);
-    --grain-opacity:.3;
+    --line:rgba(242,236,216,.13);
+    --line-strong:rgba(242,236,216,.28);
+    --wash:rgba(233,101,93,.13);
+    --shadow-s:0 1px 1px rgba(0,0,0,.45), 0 4px 12px -8px rgba(0,0,0,.85);
+    --shadow-m:0 1px 2px rgba(0,0,0,.45), 0 16px 34px -18px rgba(0,0,0,.95);
+    --grain-opacity:.26;
     --grain-blend:soft-light;
-    --ok:#6fbf92;
-    --warn:#dca94f;
+    --ok:#73c295;
+    --warn:#e0ae55;
+    --mark-fill:#f5f5dc;
+    --mark-stroke:#ca3232;
+    --mark-shadow:rgba(0,0,0,.6);
+    --logo-glow:0 0 22px rgba(202,50,50,.45);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#16110f;
-  --paper-deep:#0f0b0a;
-  --card:#211a17;
-  --ink:#f4ece1;
-  --ink-soft:#a89487;
-  --brand:#e4615b;
+  --paper:#171110;
+  --paper-deep:#100c0b;
+  --card:#221a18;
+  --ink:#f2ecd8;
+  --ink-soft:#ab9b8c;
+  --brand:#e9655d;
   --on-brand:#1a1210;
-  --line:rgba(244,236,225,.14);
-  --line-strong:rgba(244,236,225,.3);
-  --wash:rgba(228,97,91,.12);
-  --shadow-s:0 1px 1px rgba(0,0,0,.4), 0 4px 12px -8px rgba(0,0,0,.8);
-  --shadow-m:0 1px 2px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.9);
-  --grain-opacity:.3;
+  --line:rgba(242,236,216,.13);
+  --line-strong:rgba(242,236,216,.28);
+  --wash:rgba(233,101,93,.13);
+  --shadow-s:0 1px 1px rgba(0,0,0,.45), 0 4px 12px -8px rgba(0,0,0,.85);
+  --shadow-m:0 1px 2px rgba(0,0,0,.45), 0 16px 34px -18px rgba(0,0,0,.95);
+  --grain-opacity:.26;
   --grain-blend:soft-light;
-  --ok:#6fbf92;
-  --warn:#dca94f;
+  --ok:#73c295;
+  --warn:#e0ae55;
+  --mark-fill:#f5f5dc;
+  --mark-stroke:#ca3232;
+  --mark-shadow:rgba(0,0,0,.6);
+  --logo-glow:0 0 22px rgba(202,50,50,.45);
   color-scheme:dark;
 }
 
@@ -97,11 +110,12 @@ h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:400;text-wrap:bala
 /* ---------- lockup Bunnyè ---------- */
 .wordmark{
   font-family:var(--font-script); font-style:italic; font-weight:700;
-  color:var(--logo-red);
-  -webkit-text-stroke:.75px var(--cream);
+  color:var(--mark-fill);
+  -webkit-text-stroke:.75px var(--mark-stroke);
   paint-order:stroke fill;
-  text-shadow:1.5px 1.6px 0 rgba(120,22,22,.5);
+  text-shadow:1.5px 1.6px 0 var(--mark-shadow);
   letter-spacing:.005em; line-height:1;
+  transition:color .3s ease;
 }
 .wordmark--inv{
   color:var(--cream);
@@ -145,19 +159,55 @@ p{margin:0}
   border-bottom:1px solid var(--line);
   margin-bottom:22px;
 }
-.brand{display:flex; align-items:center; gap:10px; min-width:0}
+.brand{display:flex; align-items:center; gap:10px; min-width:0; margin-right:auto}
 .brand__mark{width:38px; height:38px; flex:none; filter:drop-shadow(0 2px 3px rgba(36,21,18,.22))}
 .brand__mark .heart{width:38px; height:38px}
 .brand__mark .wordmark{font-size:15px; margin-top:-2px}
 .brand__name{font-size:23px; line-height:1.05; white-space:nowrap; padding-right:2px}
 .brand__sub{font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
-.topnav{display:none; margin-left:auto; gap:4px}
+.topnav{display:none; gap:4px}
 .topnav button{
   padding:7px 14px; border-radius:999px; font-size:13.5px; font-weight:500; color:var(--ink-soft);
   transition:background .18s ease,color .18s ease;
 }
 .topnav button:hover{background:var(--wash); color:var(--ink)}
 .topnav button[aria-current="page"]{background:var(--ink); color:var(--paper)}
+
+/* ---------- sakelar tema ---------- */
+.themer{
+  position:relative; display:flex; gap:2px; flex:none;
+  padding:3px; border-radius:999px;
+  background:var(--paper-deep); border:1px solid var(--line);
+}
+.themer__thumb{
+  position:absolute; top:3px; bottom:3px; left:3px; width:34px;
+  border-radius:999px; background:var(--card);
+  border:1px solid var(--line-strong);
+  box-shadow:var(--shadow-s);
+  transition:transform .34s cubic-bezier(.2,.9,.3,1);
+  pointer-events:none;
+}
+.themer button{
+  position:relative; z-index:1;
+  width:34px; height:28px; border-radius:999px;
+  display:grid; place-items:center; color:var(--ink-soft);
+  transition:color .24s ease, transform .2s ease;
+}
+.themer button:hover{color:var(--ink)}
+.themer button:active{transform:scale(.9)}
+.themer button[aria-checked="true"]{color:var(--brand)}
+.themer button svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round}
+.themer button[aria-checked="true"] .sun-core{fill:currentColor; stroke:none}
+.themer button[aria-checked="true"] .moon-body{fill:currentColor}
+.themer button[aria-checked="true"] .auto-half{fill:currentColor; stroke:none}
+
+/* transisi tema melingkar dari tombol yang ditekan */
+::view-transition-old(root),::view-transition-new(root){animation:none; mix-blend-mode:normal}
+::view-transition-old(root){z-index:0}
+::view-transition-new(root){z-index:1}
+.theming, .theming *{
+  transition:background-color .3s ease, color .3s ease, border-color .3s ease, fill .3s ease, transform .3s cubic-bezier(.2,.9,.3,1) !important;
+}
 
 .tabbar{
   position:fixed; left:0; right:0; bottom:0; z-index:20;
@@ -302,7 +352,7 @@ main{padding-bottom:96px}
 .hero__stats{display:flex; gap:22px; flex-wrap:wrap; align-items:baseline}
 .stat__n{font-family:var(--font-display); font-size:30px; font-weight:400; line-height:1; letter-spacing:-.01em}
 .lockup--hero{margin-bottom:2px}
-.lockup--hero .heart{width:96px; height:96px; filter:drop-shadow(0 6px 14px rgba(202,50,50,.3))}
+.lockup--hero .heart{width:96px; height:96px; filter:drop-shadow(var(--logo-glow))}
 .lockup--hero .wordmark{font-size:31px; margin-top:4px}
 .stat__l{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
 .ticker{
@@ -466,6 +516,18 @@ main{padding-bottom:96px}
 }
 </style>
 
+<script>
+/* Dijalankan sebelum halaman tergambar supaya tidak ada kedipan tema. */
+(function(){
+  try{
+    var r = document.documentElement;
+    window.__bunnyeHostTheme = r.getAttribute("data-theme");
+    var v = localStorage.getItem("bunnye.theme");
+    if(v === "light" || v === "dark") r.setAttribute("data-theme", v);
+  }catch(e){}
+})();
+</script>
+
 <div class="proto">
   <span class="proto__tag">Prototipe</span>
   <div class="switch" role="group" aria-label="Pilih tampilan">
@@ -489,6 +551,18 @@ main{padding-bottom:96px}
       </div>
     </div>
     <nav class="topnav" id="topnav" aria-label="Navigasi utama"></nav>
+    <div class="themer" id="themer" role="radiogroup" aria-label="Tema tampilan">
+      <span class="themer__thumb" id="themerThumb"></span>
+      <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-opt="light" title="Terang" aria-label="Tema terang">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle class="sun-core" cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.2M12 19.2v2.2M4.4 4.4l1.6 1.6M18 18l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.4 19.6L6 18M18 6l1.6-1.6"/></svg>
+      </button>
+      <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-opt="dark" title="Gelap" aria-label="Tema gelap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="moon-body" d="M20 14.4A8.6 8.6 0 0 1 9.6 4 8.6 8.6 0 1 0 20 14.4z"/></svg>
+      </button>
+      <button type="button" role="radio" aria-checked="true" tabindex="0" data-theme-opt="system" title="Ikut sistem" aria-label="Ikut tema sistem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path class="auto-half" d="M12 3.6a8.4 8.4 0 0 1 0 16.8z"/></svg>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -995,6 +1069,130 @@ main{padding-bottom:96px}
     var f = $("#flash");
     f.classList.remove("go"); void f.offsetWidth; f.classList.add("go");
   }
+
+  /* ---------- tema ---------- */
+  var THEME_KEY = "bunnye.theme";
+  var ORDER = ["light", "dark", "system"];
+  var SURFACE = { light:"#f5f5dc", dark:"#171110" };
+  var root = document.documentElement;
+  var hostTheme = (typeof window.__bunnyeHostTheme !== "undefined")
+    ? window.__bunnyeHostTheme
+    : root.getAttribute("data-theme");
+  var mqDark = window.matchMedia("(prefers-color-scheme: dark)");
+  var mqCalm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var pref = "system";
+  var selfWrite = false;
+
+  var metaTheme = document.createElement("meta");
+  metaTheme.setAttribute("name", "theme-color");
+  document.head.appendChild(metaTheme);
+
+  try{
+    var saved = localStorage.getItem(THEME_KEY);
+    if(saved === "light" || saved === "dark") pref = saved;
+  }catch(e){}
+
+  function effective(){
+    if(pref !== "system") return pref;
+    if(hostTheme === "light" || hostTheme === "dark") return hostTheme;
+    return mqDark.matches ? "dark" : "light";
+  }
+
+  function paintRoot(){
+    selfWrite = true;
+    if(pref === "system"){
+      if(hostTheme) root.setAttribute("data-theme", hostTheme);
+      else root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", pref);
+    }
+    Promise.resolve().then(function(){ selfWrite = false; });
+  }
+
+  function syncControl(){
+    var i = ORDER.indexOf(pref);
+    if(i < 0) i = 2;
+    $("#themerThumb").style.transform = "translateX(" + (i * 36) + "px)";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-theme-opt]"), function(b){
+      var on = b.getAttribute("data-theme-opt") === pref;
+      b.setAttribute("aria-checked", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+    });
+    metaTheme.setAttribute("content", SURFACE[effective()]);
+  }
+
+  function setTheme(next, origin){
+    if(ORDER.indexOf(next) < 0 || next === pref) return;
+    pref = next;
+    try{
+      if(next === "system") localStorage.removeItem(THEME_KEY);
+      else localStorage.setItem(THEME_KEY, next);
+    }catch(e){}
+
+    var commit = function(){ paintRoot(); syncControl(); };
+
+    if(mqCalm.matches){ commit(); return; }
+
+    if(typeof document.startViewTransition !== "function"){
+      document.body.classList.add("theming");
+      commit();
+      setTimeout(function(){ document.body.classList.remove("theming"); }, 340);
+      return;
+    }
+
+    var x = window.innerWidth / 2, y = 0;
+    if(origin){
+      var r = origin.getBoundingClientRect();
+      x = r.left + r.width / 2;
+      y = r.top + r.height / 2;
+    }
+    var reach = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+    var vt;
+    try{ vt = document.startViewTransition(commit); }
+    catch(e){ commit(); return; }
+
+    vt.ready.then(function(){
+      root.animate(
+        { clipPath:[ "circle(0px at " + x + "px " + y + "px)", "circle(" + reach + "px at " + x + "px " + y + "px)" ] },
+        { duration:560, easing:"cubic-bezier(.32,.72,.24,1)", pseudoElement:"::view-transition-new(root)" }
+      );
+    }).catch(function(){});
+  }
+
+  $("#themer").addEventListener("click", function(e){
+    var b = e.target.closest("[data-theme-opt]");
+    if(b) setTheme(b.getAttribute("data-theme-opt"), b);
+  });
+
+  $("#themer").addEventListener("keydown", function(e){
+    var step = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1
+             : (e.key === "ArrowLeft" || e.key === "ArrowUp") ? -1 : 0;
+    if(!step) return;
+    e.preventDefault();
+    var i = (ORDER.indexOf(pref) + step + ORDER.length) % ORDER.length;
+    var b = document.querySelector('[data-theme-opt="' + ORDER[i] + '"]');
+    setTheme(ORDER[i], b);
+    if(b) b.focus();
+  });
+
+  /* Mode sistem ikut OS, dan ikut tema aplikasi jika aplikasi yang mengubahnya. */
+  var onSystem = function(){ if(pref === "system") syncControl(); };
+  if(mqDark.addEventListener) mqDark.addEventListener("change", onSystem);
+  else if(mqDark.addListener) mqDark.addListener(onSystem);
+
+  if(window.MutationObserver){
+    new MutationObserver(function(){
+      if(selfWrite) return;
+      var cur = root.getAttribute("data-theme");
+      hostTheme = cur;
+      if(pref === "system") syncControl();
+      else if(cur !== pref){ paintRoot(); syncControl(); }
+    }).observe(root, { attributes:true, attributeFilter:["data-theme"] });
+  }
+
+  paintRoot();
+  syncControl();
 
   /* ---------- tabbar disuntik ---------- */
   var tb = document.createElement("nav");
